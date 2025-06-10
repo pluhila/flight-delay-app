@@ -2,8 +2,10 @@ import os
 import pickle
 import csv
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # Load model from ../data/model.pkl
 MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', 'data', 'model.pkl')
