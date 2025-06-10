@@ -51,18 +51,22 @@ def predict_delay(request: PredictionRequest):
         "DayOfWeek": request.day_of_week,
         "OriginAirportID": request.airport_id
     }])
-    # Add missing columns with zeros if needed
-    for col in model.feature_names_in_:
-        if col not in input_df.columns:
-            input_df[col] = 0
-    input_df = input_df[model.feature_names_in_]
 
-    pred = model.predict(input_df)[0]
-    # For demonstration, confidence is set as a dummy value
-    confidence = 0.85
+    # Add missing columns with zeros if needed (avoid fragmentation)
+    missing_cols = [col for col in model.feature_names_in_ if col not in input_df.columns]
+    if missing_cols:
+        zeros_df = pd.DataFrame(0, index=input_df.index, columns=missing_cols)
+        input_df = pd.concat([input_df, zeros_df], axis=1)
+    input_df = input_df[model.feature_names_in_].copy()  # De-fragment the DataFrame
 
+    pred = float(model.predict(input_df)[0])
+    # Calculate standard deviation of predictions from all trees as a proxy for confidence
+    tree_preds = np.array([tree.predict(input_df)[0] for tree in model.estimators_])
+    std = float(np.std(tree_preds))
+    # Convert std to a confidence score: higher std = lower confidence
+    confidence = float(1 / (1 + std))
     return {
-        "predicted_delay": float(pred),
+        "predicted_delay": pred,
         "confidence": confidence
     }
 @app.get("/")
