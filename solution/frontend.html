@@ -1,0 +1,26 @@
+<!-- frontend.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Delay Predictor</title>
+    <link rel="stylesheet" href="frontend.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Flight Delay Predictor</h1>
+        <form id="predict-form">
+            <label for="day">Day of the Week:</label>
+            <select id="day" name="day" required></select>
+
+            <label for="airport">Airport:</label>
+            <select id="airport" name="airport" required></select>
+
+            <button type="submit">Predict Delay</button>
+        </form>
+        <div id="result" class="result"></div>
+    </div>
+    <script src="frontend.js"></script>
+</body>
+</html>
