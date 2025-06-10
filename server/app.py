@@ -1,9 +1,3 @@
-# server/app.py
-# Flask server to expose the flight delay model and airport list as an API
-# Endpoints:
-#   - /predict: Accepts day of week and airport id, returns delay chance and confidence
-#   - /airports: Returns list of airport names and IDs, sorted alphabetically
-
 from flask import Flask, request, jsonify
 import pickle
 import pandas as pd
