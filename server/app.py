@@ -7,8 +7,8 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-# Load model from ../data/model.pkl
-MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', 'data', 'model.pkl')
+# Load model from ../data/flight_delay_model.pkl
+MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', 'data', 'flight_delay_model.pkl')
 print(f"Loading model from: {MODEL_PATH}")
 if os.path.exists(MODEL_PATH):
     with open(MODEL_PATH, 'rb') as f:
